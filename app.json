@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "GreenBasket",
+    "displayname": "GreenBasket",
+    "slug": "Greenbasket",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/apps/image.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/apps/entry.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyCCUF7-eDY44q5ThMdAFiydxXegf7cam5E",
+          "certificateHash": "5D:51:69:09:FA:A3:FC:53:E0:3D:9F:46:73:7B:64:9B:C0:4A:37:07"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "14c3497f-0fff-4d6b-bccc-ba4f20199a4a"
+      }
+    }
+  }
+}
