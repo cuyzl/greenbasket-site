@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Basket - Enhance Your Grocery Shopping Experience</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #4caf50;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .feature {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 48%;
+            padding: 20px;
+            margin: 10px 0;
+        }
+        footer {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>This is the homepage.</p>
+    <header>
+        <h1>Welcome to Green Basket</h1>
+        <p>Enhancing your grocery shopping experience</p>
+    </header>
+
+    <div class="container">
+        <h2>About Green Basket</h2>
+        <p>The Green Basket application, developed by a for-profit business based in Astana, Kazakhstan, serves as a comprehensive tool designed to promote responsible consumption, enhance health and well-being, and improve the grocery shopping experience.</p>
+        
+        <p>This app features a food scanner functionality, allowing users to scan products using their smartphone's camera and add them to a virtual shopping cart. The cart keeps track of items available at home and those purchased in-store, and it offers recipes based on the ingredients in the virtual basket. Additionally, the app assists users in tracking the shelf life of their groceries, promoting conscious consumption and the rational use of food.</p>
+
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Product Scanning</h3>
+                <p>Scan product names and categories using your phone's camera and add them to a virtual cart.</p>
+            </div>
+            <div class="feature">
+                <h3>Cart Management</h3>
+                <p>Keep track of products available at home and those purchased during shopping trips.</p>
+            </div>
+            <div class="feature">
+                <h3>Recipe Suggestions</h3>
+                <p>Receive recipe recommendations to promote creative and healthy meal options based on ingredients in your cart.</p>
+            </div>
+            <div class="feature">
+                <h3>Expiration Date Tracking</h3>
+                <p>Track the expiration dates of products added to your grocery list to minimize food waste and encourage timely consumption.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Green Basket &copy; 2024. All rights reserved.</p>
+    </footer>
 </body>
 </html>
