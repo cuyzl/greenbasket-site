@@ -3,37 +3,48 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useAuthRequest, makeRedirectUri } from 'expo-auth-session';
-import { GoogleAuthProvider } from 'expo-auth-session/providers/google';
-import { registerRootComponent } from 'expo';
-import { name as appName } from './app.json';
+import * as Google from 'expo-auth-session/providers/google';
+import { useState } from 'react';
 
-const GOOGLE_CLIENT_ID = '142036079450-g6bjstdf6igmras7ek7o36c5dape8vik.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '142036079450-9vaotm69ac390ql4b93s5p9o7oikfnnl.apps.googleusercontent.com';
 
 function AuthScreen({ navigation }) {
-  const [request, response, promptAsync] = GoogleAuthProvider.useIdTokenAuthRequest({
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: GOOGLE_CLIENT_ID,
-    redirectUri: makeRedirectUri({
-      useProxy: true, // Change to false if using your own redirect URI
-    }),
+    scopes: ['profile', 'email'],
   });
 
   React.useEffect(() => {
+    console.log('Request:', request);
+    console.log('Response:', response);
+
+    if (request) {
+      setIsLoading(false);
+    }
+
     if (response?.type === 'success') {
       const { id_token } = response.params;
       console.log('ID Token:', id_token);
       navigation.replace('Home');
     }
-  }, [response]);
+  }, [request, response]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Sign in with Google</Text>
-      <Button
-        title="Sign in with Google"
-        onPress={() => promptAsync()}
-        disabled={!request}
-      />
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <Button
+          title="Sign in with Google"
+          onPress={() => {
+            promptAsync();
+          }}
+          disabled={!request}
+        />
+      )}
       <StatusBar style="auto" />
     </View>
   );
@@ -45,7 +56,7 @@ function HomeScreen({ navigation }) {
       <Text style={styles.welcomeText}>Welcome!!!</Text>
       <Button
         title="Log in"
-        onPress={() => navigation.navigate('Details')} // Navigate to Details screen
+        onPress={() => navigation.navigate('Details')}
       />
       <StatusBar style="auto" />
     </View>
@@ -66,11 +77,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Auth"> {/* Start directly on AuthScreen */}
+      <Stack.Navigator initialRouteName="Auth">
         <Stack.Screen
           name="Auth"
           component={AuthScreen}
-          options={{ title: 'Authentication' }} // Header title for Auth screen
+          options={{ title: 'Authentication' }}
         />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
