@@ -1,8 +1,7 @@
 {
   "expo": {
-    "name": "GreenBasket",
-    "displayname": "GreenBasket",
-    "slug": "GreenBasket",
+    "name": "Greenbasket",
+    "slug" : "Greenbasket",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/apps/image.png",
@@ -20,13 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "config": {
-        "googleSignIn": {
-          "apiKey": "AIzaSyCCUF7-eDY44q5ThMdAFiydxXegf7cam5E",
-          "certificateHash": "5D:51:69:09:FA:A3:FC:53:E0:3D:9F:46:73:7B:64:9B:C0:4A:37:07"
-        }
-      },
-      "package": "com.cuyzl.Greenbasket"
+      "package": "com.greenbasketkz.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"

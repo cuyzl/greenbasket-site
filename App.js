@@ -1,35 +1,31 @@
-import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Google from 'expo-auth-session/providers/google';
-import { useState } from 'react';
+import PreferencesScreen from './PreferencesScreen';
 
 const GOOGLE_CLIENT_ID = '142036079450-9vaotm69ac390ql4b93s5p9o7oikfnnl.apps.googleusercontent.com';
 
 function AuthScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
-
+  const [error, setError] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: GOOGLE_CLIENT_ID,
     scopes: ['profile', 'email'],
   });
 
-  React.useEffect(() => {
-    console.log('Request:', request);
-    console.log('Response:', response);
-
-    if (request) {
-      setIsLoading(false);
-    }
-
+  useEffect(() => {
     if (response?.type === 'success') {
       const { id_token } = response.params;
       console.log('ID Token:', id_token);
       navigation.replace('Home');
+    } else if (response?.type === 'error') {
+      setError('Authentication failed. Please try again.');
     }
-  }, [request, response]);
+    setIsLoading(false);
+  }, [response, navigation]);
 
   return (
     <View style={styles.container}>
@@ -37,13 +33,14 @@ function AuthScreen({ navigation }) {
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
-        <Button
-          title="Sign in with Google"
-          onPress={() => {
-            promptAsync();
-          }}
-          disabled={!request}
-        />
+        <>
+          {error && <Text style={styles.errorText}>{error}</Text>}
+          <Button
+            title="Sign in with Google"
+            onPress={promptAsync}
+            disabled={!request}
+          />
+        </>
       )}
       <StatusBar style="auto" />
     </View>
@@ -55,8 +52,8 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Welcome!!!</Text>
       <Button
-        title="Log in"
-        onPress={() => navigation.navigate('Details')}
+        title="Go to Preferences"
+        onPress={() => navigation.navigate('Preferences')}
       />
       <StatusBar style="auto" />
     </View>
@@ -83,8 +80,18 @@ export default function App() {
           component={AuthScreen}
           options={{ title: 'Authentication' }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen
+          name="Preferences"
+          component={PreferencesScreen}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -102,5 +109,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
