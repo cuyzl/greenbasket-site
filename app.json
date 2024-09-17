@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Greenbasket",
-    "slug" : "Greenbasket",
+    "slug": "Greenbasket",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/apps/image.png",
@@ -29,6 +29,10 @@
         "projectId": "14c3497f-0fff-4d6b-bccc-ba4f20199a4a"
       }
     },
-    "scheme": "greenbasket"
+    "scheme": "greenbasket",
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
   }
 }

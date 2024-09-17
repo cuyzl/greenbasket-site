@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import CheckBox from '@react-native-community/checkbox';
-import { View, Text, Button, StyleSheet, CheckBox } from 'react-native';
-
+import CheckBox from '@react-native-community/checkbox';  // Import CheckBox from @react-native-community/checkbox
+import { View, Text, Button, StyleSheet } from 'react-native';  // No CheckBox import from react-native
 const PreferencesScreen = ({ navigation }) => {
   const [preferences, setPreferences] = useState({
     halal: false,
@@ -12,14 +11,26 @@ const PreferencesScreen = ({ navigation }) => {
   });
 
   const handleCheckboxChange = (preference) => {
-    setPreferences((prev) => ({
-      ...prev,
-      [preference]: !prev[preference],
-    }));
+    setPreferences((prev) => {
+      let updatedPreferences = { ...prev, [preference]: !prev[preference] };
+
+      // Deselect conflicting options
+      if (preference === 'halal' && updatedPreferences.halal) {
+        updatedPreferences.nonHalal = false;
+      } else if (preference === 'nonHalal' && updatedPreferences.nonHalal) {
+        updatedPreferences.halal = false;
+      }
+      if (preference === 'vegan' && updatedPreferences.vegan) {
+        updatedPreferences.nonVegan = false;
+      } else if (preference === 'nonVegan' && updatedPreferences.nonVegan) {
+        updatedPreferences.vegan = false;
+      }
+
+      return updatedPreferences;
+    });
   };
 
   const handleSavePreferences = () => {
-    // Save preferences to database here
     console.log('Saved Preferences:', preferences);
     navigation.replace('Home');
   };
@@ -29,35 +40,35 @@ const PreferencesScreen = ({ navigation }) => {
       <Text style={styles.welcomeText}>Select Your Preferences</Text>
       <View style={styles.checkboxContainer}>
         <View style={styles.checkboxItem}>
-          <Text>Halal</Text>
+          <Text style={styles.checkboxLabel}>Halal</Text>
           <CheckBox
             value={preferences.halal}
             onValueChange={() => handleCheckboxChange('halal')}
           />
         </View>
         <View style={styles.checkboxItem}>
-          <Text>Non-Halal</Text>
+          <Text style={styles.checkboxLabel}>Non-Halal</Text>
           <CheckBox
             value={preferences.nonHalal}
             onValueChange={() => handleCheckboxChange('nonHalal')}
           />
         </View>
         <View style={styles.checkboxItem}>
-          <Text>Vegan</Text>
+          <Text style={styles.checkboxLabel}>Vegan</Text>
           <CheckBox
             value={preferences.vegan}
             onValueChange={() => handleCheckboxChange('vegan')}
           />
         </View>
         <View style={styles.checkboxItem}>
-          <Text>Non-Vegan</Text>
+          <Text style={styles.checkboxLabel}>Non-Vegan</Text>
           <CheckBox
             value={preferences.nonVegan}
             onValueChange={() => handleCheckboxChange('nonVegan')}
           />
         </View>
         <View style={styles.checkboxItem}>
-          <Text>Lactose Intolerant</Text>
+          <Text style={styles.checkboxLabel}>Lactose Intolerant</Text>
           <CheckBox
             value={preferences.lactoseIntolerant}
             onValueChange={() => handleCheckboxChange('lactoseIntolerant')}
@@ -75,6 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#764CA5',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   welcomeText: {
     fontSize: 24,
@@ -84,12 +96,16 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     width: '100%',
-    padding: 20,
   },
   checkboxItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 10,
+  },
+  checkboxLabel: {
+    fontSize: 18,
+    color: '#FFFFFF',
   },
 });
 
