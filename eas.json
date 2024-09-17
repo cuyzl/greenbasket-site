@@ -1,21 +1,31 @@
 {
-  "cli": {
-    "version": ">= 10.2.4"
-  },
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "buildType": "archive"
+      }
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "path": "./android/app/build/outputs/bundle/production-release.aab",
+        "package": "com.greenbasketkz.app"
+      },
+      "ios": {
+        "path": "./ios/build/ios.ipa"
+      }
+    }
   }
-}
 }
